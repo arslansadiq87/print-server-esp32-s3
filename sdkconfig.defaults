@@ -1,0 +1,10 @@
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+# This file lister fits in internal RAM. Leave the N16R8's external PSRAM
+# unused; adding it to the heap triggered an ESP-IDF startup fault on this board.
+# CONFIG_SPIRAM is not set
+# The native USB Serial/JTAG and USB OTG host share the USB PHY on ESP32-S3.
+# Keep the console on UART0 so GPIO 19/20 remain available to USB host mode.
+CONFIG_ESP_CONSOLE_SECONDARY_NONE=y
