@@ -12,7 +12,7 @@ Download firmware from the repository's [Releases page](https://github.com/arsla
 | `partitions.bin` | Partition table at **0x8000** |
 | `SHA256SUMS.txt` | Checksums of the firmware files |
 
-The firmware ZIP contains all these files and this guide. The merged image is the recommended first-install option. Do not flash the application-only file at 0x0. This is a PlatformIO **release-mode** build, not a debug build. Compilation is verified; physical printing must be verified on your hardware.
+The firmware ZIP contains all these files and this guide. The merged image is the recommended first-install option. **It spans the NVS region and resets saved Wi-Fi settings.** Use application-only updates with matching partitions when you need to preserve NVS. Do not flash the application-only file at 0x0. This is a PlatformIO **release-mode** build, not a debug build. Compilation is verified; physical printing must be verified on your hardware.
 
 ## Install with esptool
 
@@ -40,7 +40,7 @@ The release is compiled with **empty Wi-Fi credentials and an empty HTTP API key
 
 RAW TCP port 9100 and Windows RAW printing are available. The web status/setup pages are available. **HTTP label/test printing returns 401 with this public build.** To enable it, build the source with your own random `X_API_KEY` in the ignored credential header; never publish that personal binary. There is no shared public API key.
 
-Flashing normally preserves saved NVS Wi-Fi settings. To deliberately reset an old installation, run the following **before** flashing the merged image. It destroys all existing flash contents and settings:
+Application-only flashing normally preserves NVS; this merged image does not. For a complete flash reset beyond the merged image's covered region, optionally run the following **before** flashing. It destroys all existing flash contents and settings:
 
 ```sh
 python -m esptool --chip esp32s3 --port COM7 erase_flash
